@@ -1,35 +1,37 @@
 # Zero-Latency Vision Pipeline
 
-هذا المشروع عبارة عن أداة برمجية لاكتشاف الكائنات (Object Detection) في الصور باستخدام الذكاء الاصطناعي، مع التركيز على الأداء العالي من خلال الاستفادة من قوة معالج الرسوميات (WebGPU).
+A fast, client-side object detection pipeline powered by WebGPU. 
 
-تم بناء هذا المشروع بالاعتماد على مكتبة [Transformers.js](https://huggingface.co/docs/transformers.js) ونموذج `Xenova/detr-resnet-50`.
+This project uses [Transformers.js](https://huggingface.co/docs/transformers.js) and the `Xenova/detr-resnet-50` model to run object detection completely locally, bypassing the need for cloud inference APIs.
 
-## المميزات 🌟
-- **أداء فائق السرعة (Zero-Latency):** يتم توجيه العمليات الحسابية محلياً باستخدام `WebGPU` مما يخفف العبء بشكل كبير عن المعالج المركزي (CPU).
-- **العمل محلياً (Offline-First):** يتم تحميل وتخزين نموذج الذكاء الاصطناعي محلياً لتسريع العمليات المستقبلية.
-- **دقة عالية:** يستخدم المشروع نموذج `detr-resnet-50` مع تحديد نسبة ثقة صارمة (Threshold) تبلغ 85% لضمان دقة النتائج وتقليل الأخطاء.
+## Features
+- **Zero Latency:** Computations are offloaded to your local GPU via WebGPU, taking the heavy lifting off the CPU and returning results almost instantly.
+- **Offline-First:** The model weights are downloaded once and cached locally. After the first run, it works entirely offline.
+- **High Accuracy:** Uses the robust `detr-resnet-50` model with a strict 85% confidence threshold to filter out false positives.
 
-## المتطلبات المسبقة 📋
-- برنامج **[Node.js](https://nodejs.org/)** (إصدار حديث) مثبت على جهازك.
+## Prerequisites
+- [Node.js](https://nodejs.org/) installed on your machine.
 
-## طريقة التثبيت 🛠️
+## Getting Started
 
-1. افتح موجه الأوامر (Terminal) وانتقل إلى مجلد المشروع.
-2. قم بتثبيت المكتبات المطلوبة (إذا لم تكن مثبتة مسبقاً) عبر الأمر التالي:
+1. Navigate to the project folder in your terminal:
+   ```bash
+   cd "Zero-Latency Vision Pipeline"
+   ```
+
+2. Install the required dependencies:
    ```bash
    npm install
    ```
 
-## طريقة التشغيل 🚀
+3. Run the script:
+   ```bash
+   node index.js
+   ```
 
-لتشغيل البرنامج وتحليل الصورة الافتراضية، اكتب الأمر التالي في الـ Terminal:
-```bash
-node index.js
-```
+## Example Output
 
-## مثال على المخرجات 📊
-
-عند التشغيل بنجاح، سيقوم البرنامج بتحليل الصورة وسيقوم بطباعة البيانات على هيئة (JSON) تحتوي على: اسم الكائن المكتشف، نسبة الثقة (Score)، وإحداثيات الكائن (Box) في الصورة:
+By default, the script processes a sample image and outputs the detected objects, their confidence scores, and bounding box coordinates in JSON format:
 
 ```json
 [System] Allocating WebGPU memory and caching model weights...
@@ -58,5 +60,5 @@ node index.js
 ]
 ```
 
-## التعديل على الكود 📝
-لتجربة البرنامج على صور أخرى، يمكنك فتح ملف `index.js` وتغيير الرابط الموجود في المتغير `imageUrl` إلى رابط أي صورة أخرى تود تحليلها.
+## Testing Your Own Images
+Want to try it on a different image? Just open `index.js` and replace the URL in the `imageUrl` variable with any image link you'd like to test.
